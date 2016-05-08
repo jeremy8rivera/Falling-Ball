@@ -35,7 +35,7 @@ def game_loop():
 
         #depending on what key the user presses, update ball x and y position accordingly
         if keys[pygame.K_UP]:
-            ballPosition[1] -= speed
+            ballPosition[1] -= speed # this will eventually be deleted
         if keys[pygame.K_DOWN]:
             ballPosition[1] += speed
         if keys[pygame.K_LEFT]:
@@ -43,7 +43,15 @@ def game_loop():
         if keys[pygame.K_RIGHT]:
             ballPosition[0] += speed
 
-
+        #creates boundaries
+        if ballPosition[0] > 1280:
+        	exit()
+        if ballPosition[0] < 0:
+        	exit()
+        #if ballPosition[1] >720:
+        #	exit()
+        if ballPosition[1] < 0:
+        	exit()	
         screen.fill(BLACK) #fill the screen with black
         screen.blit(ballImg, ballPosition) #draw the ball
         pygame.display.update() #update the screen
