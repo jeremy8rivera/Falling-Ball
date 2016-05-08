@@ -1,3 +1,5 @@
+'''go here fore help http://programarcadegames.com/python_examples/show_file.php?file=platform_jumper.py'''
+
 import pygame
 import time
 import sys
