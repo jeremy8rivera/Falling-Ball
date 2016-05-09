@@ -50,23 +50,33 @@ class Ball(object):
         self.position = [0,0]
         self.img = pygame.image.load('ball.png')
         self.speed = 10
-        self.radius = 10
+        self.radius = 50
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.radius, self.radius)
+
+    def move_single_axis(self, dx, dy):
+        
+        # Move the rect
+        self.position[0] += dx
+        self.position[1] += dy
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.radius, self.radius)
+        # If you collide with a wall, move out based on velocity
+        for platform in platforms:
+            if platform.rect.colliderect(self.rect):
+                if dx > 0: # Moving right; Hit the left side of the wall
+                    self.position[0] = platform.rect.left - self.radius
+                if dx < 0: # Moving left; Hit the right side of the wall
+                    self.position[0] = platform.rect.right
+                if dy > 0: # Moving down; Hit the top side of the wall
+                    self.position[1] = platform.rect.top - self.radius
+                if dy < 0: # Moving up; Hit the bottom side of the wall
+                    self.position[1] = platform.rect.bottom
 
 class Platform(object):
     
     def __init__(self, pos):
         platforms.append(self)
         self.rect = pygame.Rect(pos[0], pos[1], 500, 10)
-        for platform in platforms:
-            if self.rect.colliderect(platform.rect):
-                if ball.position[0] > 0: # Moving right; Hit the left side of the wall
-                    self.rect.right = platform.rect.left
-                if ball.position[0] < 0: # Moving left; Hit the right side of the wall
-                    self.rect.left = platform.rect.right
-                if ball.position[1] > 0: # Moving down; Hit the top side of the wall
-                    self.rect.bottom = platform.rect.top
-                if ball.position[1] < 0: # Moving up; Hit the bottom side of the wall
-                    self.rect.top = platform.rect.bottom
+        
 
 ball = Ball()
 platform = Platform([500,500])
@@ -87,13 +97,13 @@ def game_loop():
         
         #depending on what key the user presses, update ball x and y position accordingly
         if keys[pygame.K_UP]:
-            ball.position[1] -= ball.speed
+            ball.move_single_axis(0, -ball.speed)
         if keys[pygame.K_DOWN]:
-            ball.position[1] += ball.speed
+            ball.move_single_axis(0, ball.speed)
         if keys[pygame.K_LEFT]:
-            ball.position[0] -= ball.speed
+            ball.move_single_axis(-ball.speed, 0)
         if keys[pygame.K_RIGHT]:
-            ball.position[0] += ball.speed
+            ball.move_single_axis(ball.speed,0)
 
         #creates boundaries
         if ball.position[0] > 1280:
@@ -107,20 +117,10 @@ def game_loop():
             time.sleep(1)
             exit()
         #deal with game over screen later
-        ''' 
-            for event in pygame.event.get(): 
-                if event.type == KEYDOWN:
-                    if event.key == K_q:
-                        exit()
-                    elif event.key == K_p:
-                        game_loop()
-                #time.sleep(1)
-            
-            #exit()
-            '''
        # platform
 
         screen.fill(BLACK) #fill the screen with black
+        #pygame.draw.rect(screen, white, ball.rect)
         screen.blit(ball.img, ball.position) #draw the ball
         pygame.draw.rect(screen, white, platform.rect)
         pygame.display.update() #update the screen
