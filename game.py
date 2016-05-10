@@ -108,13 +108,19 @@ def game_loop():
         #creates boundaries
         if ball.position[0] > 1280:
             #message_to_screen("GAME OVER", red)
+            pygame.display.quit()
+            pygame.quit()
             exit()
         if ball.position[0] < 0:
             #message_to_screen("GAME OVER", red)
+            pygame.display.quit()
+            pygame.quit()
             exit()
         if ball.position[1] < 0: #hit the top
             message_to_screen("GAME OVER!", red)
             time.sleep(1)
+            pygame.display.quit()
+            pygame.quit()
             exit()
         #deal with game over screen later
        # platform
