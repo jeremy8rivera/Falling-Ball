@@ -30,6 +30,7 @@ platforms = [] #list to hold the platforms
 
 gravity = 3
 
+
 def message_to_screen(msg, color):
     screen_text = font.render(msg, True, color)
     screen.blit(screen_text, [450, screen_height/2])
@@ -76,12 +77,26 @@ class Platform(object):
     def __init__(self, pos):
         platforms.append(self)
         self.rect = pygame.Rect(pos[0], pos[1], 500, 10)
+        self.x = pos[0]
+        self.y = pos[1]
+
+    def moveaxis(self, dx, dy):
         
+        # Move the rect
+        self.x += dx
+        self.y += dy
+        self.rect = pygame.Rect(self.x, self.y, 500, 10)
 
 ball = Ball()
 
+GamePlatList = []
+
+
+
+
 def game_loop():
-   
+    timer = 60*3
+    
     while 1:
         clock.tick(60)
         ball.move_both_axis(0, gravity)
@@ -91,9 +106,12 @@ def game_loop():
                     exit()
                     
         #platform list
-        platformList = []
-        while len(platformList) < 13:
-            platformList.append(Platform([100*(len(platformList)), 500]))
+        if(timer%(60*1) == 0):
+            platformList = []
+            while len(platformList) < 13:
+                platformList.append(Platform([100*(len(platformList)), 500]))
+            GamePlatList.append(platformList)
+        timer +=.75
 
         #get all the keys being pressed
         keys = pygame.key.get_pressed()
@@ -128,13 +146,19 @@ def game_loop():
             pygame.quit()
             exit()
         #deal with game over screen later
-       # platform
+
+        for lst in GamePlatList:
+            for i in range(len(lst)):
+                lst[i].moveaxis(0, -1.25)
 
         screen.fill(BLACK) #fill the screen with black
         #pygame.draw.rect(screen, white, ball.rect)
         screen.blit(ball.img, ball.position) #draw the ball
-        for i in range(len(platformList)):
-            pygame.draw.rect(screen, white, platformList[i].rect)
+
+        for lst in GamePlatList:
+            for i in range(len(lst)):
+                pygame.draw.rect(screen, white, lst[i].rect)
+        
         pygame.display.update() #update the screen
 
 game_loop()
