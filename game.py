@@ -79,7 +79,6 @@ class Platform(object):
         
 
 ball = Ball()
-platform = Platform([500,500])
 
 def game_loop():
    
@@ -90,6 +89,11 @@ def game_loop():
            if event.type == KEYDOWN:
                 if event.key == K_q:
                     exit()
+                    
+        #platform list
+        platformList = []
+        while len(platformList) < 13:
+            platformList.append(Platform([100*(len(platformList)), 500]))
 
         #get all the keys being pressed
         keys = pygame.key.get_pressed()
@@ -129,7 +133,8 @@ def game_loop():
         screen.fill(BLACK) #fill the screen with black
         #pygame.draw.rect(screen, white, ball.rect)
         screen.blit(ball.img, ball.position) #draw the ball
-        pygame.draw.rect(screen, white, platform.rect)
+        for i in range(len(platformList)):
+            pygame.draw.rect(screen, white, platformList[i].rect)
         pygame.display.update() #update the screen
 
 game_loop()
