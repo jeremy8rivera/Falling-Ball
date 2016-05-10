@@ -28,7 +28,7 @@ score_font = pygame.font.SysFont(None, 25)
 
 platforms = [] #list to hold the platforms
 
-
+gravity = 3
 
 def message_to_screen(msg, color):
     screen_text = font.render(msg, True, color)
@@ -53,7 +53,7 @@ class Ball(object):
         self.radius = 50
         self.rect = pygame.Rect(self.position[0], self.position[1], self.radius, self.radius)
 
-    def move_single_axis(self, dx, dy):
+    def move_both_axis(self, dx, dy):
         
         # Move the rect
         self.position[0] += dx
@@ -85,6 +85,7 @@ def game_loop():
    
     while 1:
         clock.tick(60)
+        ball.move_both_axis(0, gravity)
         for event in pygame.event.get():
            if event.type == KEYDOWN:
                 if event.key == K_q:
@@ -97,13 +98,13 @@ def game_loop():
         
         #depending on what key the user presses, update ball x and y position accordingly
         if keys[pygame.K_UP]:
-            ball.move_single_axis(0, -ball.speed)
+            ball.move_both_axis(0, -ball.speed)
         if keys[pygame.K_DOWN]:
-            ball.move_single_axis(0, ball.speed)
+            ball.move_both_axis(0, ball.speed)
         if keys[pygame.K_LEFT]:
-            ball.move_single_axis(-ball.speed, 0)
+            ball.move_both_axis(-ball.speed, 0)
         if keys[pygame.K_RIGHT]:
-            ball.move_single_axis(ball.speed,0)
+            ball.move_both_axis(ball.speed,0)
 
         #creates boundaries
         if ball.position[0] > 1280:
