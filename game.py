@@ -114,13 +114,10 @@ def game_loop():
             platform = Platform([temprandx, 720])
             GamePlatList.append(platform)
         if (timer < (60*40)):
-            print("joe")
             timer += 1.5
         elif(timer >= (60*40) and timer < (60*100)):
-            print("bill")
             timer += 2
         else:
-            print("bob")
             timer += 3
 
         #get all the keys being pressed
