@@ -48,7 +48,7 @@ class Ball(object):
     def __init__(self):
         self.position = [screen_width/2,0]
         self.img = pygame.image.load('ball.png')
-        self.speed = 10
+        self.speed = 15
         self.radius = 50
         self.rect = pygame.Rect(self.position[0], self.position[1], self.radius, self.radius)
 
@@ -113,7 +113,15 @@ def game_loop():
 
             platform = Platform([temprandx, 720])
             GamePlatList.append(platform)
-        timer += 1.5 #max should be around 3
+        if (timer < (60*40)):
+            print("joe")
+            timer += 1.5
+        elif(timer >= (60*40) and timer < (60*100)):
+            print("bill")
+            timer += 2
+        else:
+            print("bob")
+            timer += 3
 
         #get all the keys being pressed
         keys = pygame.key.get_pressed()
