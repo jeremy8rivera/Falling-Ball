@@ -28,7 +28,7 @@ score_font = pygame.font.SysFont(None, 25)
 
 platforms = [] #list to hold the platforms
 
-gravity = 5
+gravity = 8
 
 
 
@@ -38,13 +38,6 @@ def message_to_screen(msg, color):
     screen.blit(screen_text, [200, screen_height/2])
     pygame.display.update() #update the screen
 
-
-def timerScore():
-   # while time.time()
-
-    '''for i in range(0, 99999999): # 3.1709791983764584961 years
-                    score_to_screen(str(i), green)
-                    time.sleep(1)'''
 
 class Ball(object):
     def __init__(self):
@@ -113,7 +106,7 @@ def game_loop():
 
             platform = Platform([temprandx, 720])
             GamePlatList.append(platform)
-        timer +=.75
+        timer += 1.5
 
         #get all the keys being pressed
         keys = pygame.key.get_pressed()
@@ -133,11 +126,15 @@ def game_loop():
         #creates boundaries
         if ball.position[0] > 1280:
             #message_to_screen("GAME OVER", red)
+            message_to_screen("GAME OVER! Score: {:.3f}".format(x), red)
+            time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
         if ball.position[0] < 0:
             #message_to_screen("GAME OVER", red)
+            message_to_screen("GAME OVER! Score: {:.3f}".format(x), red)
+            time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
@@ -159,7 +156,7 @@ def game_loop():
             exit()
 
         for i in GamePlatList:
-            i.moveaxis(0, -1.25)
+            i.moveaxis(0, -4.25)
 
         screen.fill(BLACK) #fill the screen with black
         #pygame.draw.rect(screen, white, ball.rect)
