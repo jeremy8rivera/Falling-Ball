@@ -93,7 +93,7 @@ GamePlatList = []
 def game_loop():
     timer = 60*3
     start_message("Left and right arrow keys to move, q to quit. Don't touch the sides!", red)
-    time.sleep(6)
+    time.sleep(4)
     x = time.time()
     platSpeed = -3.5
     while 1:
@@ -113,7 +113,7 @@ def game_loop():
 
             platform = Platform([temprandx, 720])
             GamePlatList.append(platform)
-        timer += 1.5
+        timer += 1.5 #max should be around 3
 
         #get all the keys being pressed
         keys = pygame.key.get_pressed()
@@ -121,10 +121,10 @@ def game_loop():
 
         
         #depending on what key the user presses, update ball x and y position accordingly
-        if keys[pygame.K_UP]:
-            ball.move_both_axis(0, -ball.speed)
-        if keys[pygame.K_DOWN]:
-            ball.move_both_axis(0, ball.speed)
+        #if keys[pygame.K_UP]:
+            #ball.move_both_axis(0, -ball.speed)
+        #if keys[pygame.K_DOWN]:
+            #ball.move_both_axis(0, ball.speed)
         if keys[pygame.K_LEFT]:
             ball.move_both_axis(-ball.speed, 0)
         if keys[pygame.K_RIGHT]:
@@ -171,5 +171,5 @@ def game_loop():
             pygame.draw.rect(screen, white, i.rect)
         
         pygame.display.update() #update the screen
-
+#HIGH SCORE IS 2904
 game_loop()
