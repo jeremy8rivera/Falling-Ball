@@ -31,6 +31,7 @@ platforms = [] #list to hold the platforms
 gravity = 3
 
 
+
 def message_to_screen(msg, color):
     screen_text = font.render(msg, True, color)
     screen.blit(screen_text, [450, screen_height/2])
@@ -107,16 +108,18 @@ def game_loop():
                     
         #platform list
         if(timer%(60*1) == 0):
-            platformList = []
-            while len(platformList) < 13:
-                platformList.append(Platform([100*(len(platformList)), 500]))
-            GamePlatList.append(platformList)
+            
+            temprandx = random.randrange(0, 960)
+            temprandy = random.randrange(0, 400)
+
+            platform = Platform([temprandx, 720])
+            GamePlatList.append(platform)
         timer +=.75
 
         #get all the keys being pressed
         keys = pygame.key.get_pressed()
 
-        #timerScore() FIGURE OUT WHERE TO PUT THIS SO IT
+
         
         #depending on what key the user presses, update ball x and y position accordingly
         if keys[pygame.K_UP]:
@@ -147,17 +150,15 @@ def game_loop():
             exit()
         #deal with game over screen later
 
-        for lst in GamePlatList:
-            for i in range(len(lst)):
-                lst[i].moveaxis(0, -1.25)
+        for i in GamePlatList:
+            i.moveaxis(0, -1.25)
 
         screen.fill(BLACK) #fill the screen with black
         #pygame.draw.rect(screen, white, ball.rect)
         screen.blit(ball.img, ball.position) #draw the ball
 
-        for lst in GamePlatList:
-            for i in range(len(lst)):
-                pygame.draw.rect(screen, white, lst[i].rect)
+        for i in GamePlatList:
+            pygame.draw.rect(screen, white, i.rect)
         
         pygame.display.update() #update the screen
 
