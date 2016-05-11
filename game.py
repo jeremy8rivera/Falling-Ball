@@ -28,7 +28,8 @@ score_font = pygame.font.SysFont(None, 25)
 
 platforms = [] #list to hold the platforms
 
-gravity = 3
+gravity = 5
+
 
 
 
@@ -91,8 +92,6 @@ ball = Ball()
 GamePlatList = []
 
 
-
-
 def game_loop():
     timer = 60*3
    
@@ -107,7 +106,7 @@ def game_loop():
                     exit()
                     
         #platform list
-        if(timer%(60*1) == 0):
+        if(timer%(60) == 0):
             
             temprandx = random.randrange(0, 960)
             temprandy = random.randrange(0, 400)
@@ -145,12 +144,19 @@ def game_loop():
         if ball.position[1] < 0: #hit the top
             x= time.time()-x
             #message_to_screen("GAME OVER! Score: " + str(x), red)
-            message_to_screen("GAME OVER! Score: {:.1f}".format(x), red)
+            message_to_screen("GAME OVER! Score: {:.3f}".format(x), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
-        #deal with game over screen later
+        if ball.position[1] > 720: #hit the top
+            x= time.time()-x
+            #message_to_screen("GAME OVER! Score: " + str(x), red)
+            message_to_screen("GAME OVER! Score: {:.3f}".format(x), red)
+            time.sleep(3)
+            pygame.display.quit()
+            pygame.quit()
+            exit()
 
         for i in GamePlatList:
             i.moveaxis(0, -1.25)
