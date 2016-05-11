@@ -33,18 +33,16 @@ gravity = 3
 
 def message_to_screen(msg, color):
     screen_text = font.render(msg, True, color)
-    screen.blit(screen_text, [450, screen_height/2])
+    screen.blit(screen_text, [200, screen_height/2])
     pygame.display.update() #update the screen
 
-def score_to_screen(time, color):
-    screen_text = score_font.render("Score:" + time, True, color)
-    screen.blit(screen_text, [1280, screen_height/2])
-    pygame.display.update() #update the screen
 
 def timerScore():
-    for i in range(0, 99999999): # 3.1709791983764584961 years
-        score_to_screen(str(i), green)
-        time.sleep(1)
+   # while time.time()
+
+    '''for i in range(0, 99999999): # 3.1709791983764584961 years
+                    score_to_screen(str(i), green)
+                    time.sleep(1)'''
 
 class Ball(object):
     def __init__(self):
@@ -96,9 +94,11 @@ GamePlatList = []
 
 def game_loop():
     timer = 60*3
-    
+   
+    x = time.time()
     while 1:
         clock.tick(60)
+        
         ball.move_both_axis(0, gravity)
         for event in pygame.event.get():
            if event.type == KEYDOWN:
@@ -140,8 +140,10 @@ def game_loop():
             pygame.quit()
             exit()
         if ball.position[1] < 0: #hit the top
-            message_to_screen("GAME OVER!", red)
-            time.sleep(1)
+            x= time.time()-x
+            #message_to_screen("GAME OVER! Score: " + str(x), red)
+            message_to_screen("GAME OVER! Score: {:.1f}".format(x), red)
+            time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
