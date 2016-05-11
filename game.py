@@ -24,7 +24,7 @@ clock = pygame.time.Clock()
 
 font = pygame.font.SysFont(None, 100)
 
-score_font = pygame.font.SysFont(None, 25)
+score_font = pygame.font.SysFont(None, 59)
 
 platforms = [] #list to hold the platforms
 
@@ -38,10 +38,15 @@ def message_to_screen(msg, color):
     screen.blit(screen_text, [200, screen_height/2])
     pygame.display.update() #update the screen
 
+def start_message(msg, color):
+    screen_text = score_font.render(msg, True, color)
+    screen.blit(screen_text, [0, screen_height/2])
+    pygame.display.update() #update the screen
+
 
 class Ball(object):
     def __init__(self):
-        self.position = [0,0]
+        self.position = [screen_width/2,0]
         self.img = pygame.image.load('ball.png')
         self.speed = 10
         self.radius = 50
@@ -87,11 +92,13 @@ GamePlatList = []
 
 def game_loop():
     timer = 60*3
-   
+    start_message("Left and right arrow keys to move, q to quit. Don't touch the sides!", red)
+    time.sleep(6)
     x = time.time()
+    platSpeed = -3.5
     while 1:
         clock.tick(60)
-        
+        platSpeed *= 1.0005
         ball.move_both_axis(0, gravity)
         for event in pygame.event.get():
            if event.type == KEYDOWN:
@@ -125,38 +132,36 @@ def game_loop():
 
         #creates boundaries
         if ball.position[0] > 1280:
-            #message_to_screen("GAME OVER", red)
-            message_to_screen("GAME OVER! Score: {:.3f}".format(x), red)
+            x= (time.time()-x)*100
+            message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
         if ball.position[0] < 0:
-            #message_to_screen("GAME OVER", red)
-            message_to_screen("GAME OVER! Score: {:.3f}".format(x), red)
+            x= (time.time()-x)*100
+            message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
         if ball.position[1] < 0: #hit the top
-            x= time.time()-x
-            #message_to_screen("GAME OVER! Score: " + str(x), red)
-            message_to_screen("GAME OVER! Score: {:.3f}".format(x), red)
+            x= (time.time()-x)*100
+            message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
         if ball.position[1] > 720: #hit the top
-            x= time.time()-x
-            #message_to_screen("GAME OVER! Score: " + str(x), red)
-            message_to_screen("GAME OVER! Score: {:.3f}".format(x), red)
+            x= (time.time()-x)*100
+            message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
 
         for i in GamePlatList:
-            i.moveaxis(0, -4.25)
+            i.moveaxis(0, platSpeed)
 
         screen.fill(BLACK) #fill the screen with black
         #pygame.draw.rect(screen, white, ball.rect)
