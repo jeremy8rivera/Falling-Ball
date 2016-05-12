@@ -180,7 +180,8 @@ def game_loop():
         
 
         for i in GamePlatList:
-            pygame.draw.rect(screen, white, i.rect)
+            screen.blit(i.img, i.rect)
+
         
         pygame.display.update() #update the screen
 #HIGH SCORE IS 2904
