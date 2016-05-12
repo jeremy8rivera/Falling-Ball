@@ -152,7 +152,7 @@ def game_loop():
             pygame.display.quit()
             pygame.quit()
             exit()
-        if ball.position[1] < 0: #hit the top
+        if ball.position[1] < 75: #hit the top
             x= (time.time()-x)*100
             message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
             time.sleep(3)
@@ -173,7 +173,7 @@ def game_loop():
         screen.fill(BLACK) #fill the screen with black
         #pygame.draw.rect(screen, white, ball.rect)
         screen.blit(ball.img, ball.position) #draw the ball
-        p = 0
+        p = -5
         while p < screen_width:  
             screen.blit(ceiling, [p,0])
             p = p + 45
