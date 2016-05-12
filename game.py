@@ -97,9 +97,11 @@ def game_loop():
     start_message("Left and right arrow keys to move, q to quit. Don't touch the sides!", red)
     time.sleep(4)
     x = time.time()
+    score = 0
     platSpeed = -3.5
     while 1:
         clock.tick(60)
+        score += 1
         platSpeed *= 1.0005
         ball.move_both_axis(0, gravity)
         for event in pygame.event.get():
@@ -137,31 +139,28 @@ def game_loop():
         if keys[pygame.K_RIGHT]:
             ball.move_both_axis(ball.speed,0)
 
+
         #creates boundaries
         if ball.position[0] > 1280:
-            x= (time.time()-x)*100
-            message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
+            message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
         if ball.position[0] < 0:
-            x= (time.time()-x)*100
-            message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
+            message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
         if ball.position[1] < 75: #hit the top
-            x= (time.time()-x)*100
-            message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
+            message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
             exit()
         if ball.position[1] > 720: #hit the top
-            x= (time.time()-x)*100
-            message_to_screen("GAME OVER! Score: {:.0f}".format(x), red)
+            message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
             time.sleep(3)
             pygame.display.quit()
             pygame.quit()
@@ -181,6 +180,9 @@ def game_loop():
 
         for i in GamePlatList:
             screen.blit(i.img, i.rect)
+
+        scoretext = font.render("Score: " + str(score), 1, red)
+        screen.blit(scoretext, (5,screen_height-120))
 
         
         pygame.display.update() #update the screen
