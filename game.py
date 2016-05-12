@@ -28,9 +28,9 @@ score_font = pygame.font.SysFont(None, 59)
 
 platforms = [] #list to hold the platforms
 
-gravity = 8
+gravity = 6
 
-
+ceiling = pygame.image.load('spike.bmp')
 
 
 def message_to_screen(msg, color):
@@ -44,10 +44,11 @@ def start_message(msg, color):
     pygame.display.update() #update the screen
 
 
+
 class Ball(object):
     def __init__(self):
-        self.position = [screen_width/2,0]
-        self.img = pygame.image.load('ball.png')
+        self.position = [screen_width/2,100]
+        self.img = pygame.image.load('ball.bmp')
         self.speed = 15
         self.radius = 50
         self.rect = pygame.Rect(self.position[0], self.position[1], self.radius, self.radius)
@@ -74,6 +75,7 @@ class Platform(object):
     
     def __init__(self, pos):
         platforms.append(self)
+        self.img = pygame.image.load('floor.bmp')
         self.rect = pygame.Rect(pos[0], pos[1], 500, 10)
         self.x = pos[0]
         self.y = pos[1]
@@ -171,6 +173,11 @@ def game_loop():
         screen.fill(BLACK) #fill the screen with black
         #pygame.draw.rect(screen, white, ball.rect)
         screen.blit(ball.img, ball.position) #draw the ball
+        p = 0
+        while p < screen_width:  
+            screen.blit(ceiling, [p,0])
+            p = p + 45
+        
 
         for i in GamePlatList:
             pygame.draw.rect(screen, white, i.rect)
