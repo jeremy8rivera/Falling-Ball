@@ -102,11 +102,11 @@ def game_loop():
     pause=False
     while 1:
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_p]
+        if keys[pygame.K_p]:
             pause=True
-        if keys[pygame.K_s]
+        if keys[pygame.K_s]:
             pause=False
-        if(pause==False)
+        if(pause==False):
             clock.tick(60)
             score += 1
             platSpeed *= 1.0005
@@ -140,9 +140,9 @@ def game_loop():
                 #ball.move_both_axis(0, -ball.speed)
             #if keys[pygame.K_DOWN]:
                 #ball.move_both_axis(0, ball.speed)
-            if keys[pygame.K_p]
+            if keys[pygame.K_p]:
                 pause=True
-            if keys[pygame.K_s]
+            if keys[pygame.K_s]:
                 pause=False
             if keys[pygame.K_LEFT]:
                 ball.move_both_axis(-ball.speed, 0)
@@ -198,3 +198,4 @@ def game_loop():
             pygame.display.update() #update the screen
 #HIGH SCORE IS 2904
 game_loop()
+
