@@ -38,9 +38,9 @@ def message_to_screen(msg, color):
     screen.blit(screen_text, [200, screen_height/2])
     pygame.display.update() #update the screen
 
-def start_message(msg, color):
+def start_message(msg, color, position):
     screen_text = score_font.render(msg, True, color)
-    screen.blit(screen_text, [0, screen_height/2])
+    screen.blit(screen_text, [200, position])
     pygame.display.update() #update the screen
 
 
@@ -94,7 +94,8 @@ GamePlatList = []
 
 def game_loop():
     timer = 60*3
-    start_message("Left and right arrow keys to move, q to quit. Don't touch the sides!", red)
+    start_message("Left and right arrow keys to move, q to quit,", red,screen_height/2)
+    start_message ("p to pause for 5 seconds. Don't touch the sides!",red, screen_height/1.5)
     time.sleep(4)
     x = time.time()
     score = 0
@@ -128,12 +129,9 @@ def game_loop():
         keys = pygame.key.get_pressed()
 
 
-        
-        #depending on what key the user presses, update ball x and y position accordingly
-        #if keys[pygame.K_UP]:
-            #ball.move_both_axis(0, -ball.speed)
-        #if keys[pygame.K_DOWN]:
-            #ball.move_both_axis(0, ball.speed)
+        if keys[pygame.K_p]:
+            message_to_screen("Paused for 5 seconds!", red)
+            time.sleep(5)
         if keys[pygame.K_LEFT]:
             ball.move_both_axis(-ball.speed, 0)
         if keys[pygame.K_RIGHT]:
