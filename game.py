@@ -186,3 +186,4 @@ def game_loop():
         pygame.display.update() #update the screen
 #HIGH SCORE IS 2904
 game_loop()
+
