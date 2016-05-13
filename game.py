@@ -99,92 +99,102 @@ def game_loop():
     x = time.time()
     score = 0
     platSpeed = -3.5
+    pause=False
     while 1:
-        clock.tick(60)
-        score += 1
-        platSpeed *= 1.0005
-        ball.move_both_axis(0, gravity)
-        for event in pygame.event.get():
-           if event.type == KEYDOWN:
-                if event.key == K_q:
-                    exit()
-                    
-        #platform list
-        if(timer%(60) == 0):
-            
-            temprandx = random.randrange(0, 960)
-            temprandy = random.randrange(0, 400)
-
-            platform = Platform([temprandx, 720])
-            GamePlatList.append(platform)
-        if (timer < (60*40)):
-            timer += 1.5
-        elif(timer >= (60*40) and timer < (60*100)):
-            timer += 2
-        else:
-            timer += 3
-
-        #get all the keys being pressed
         keys = pygame.key.get_pressed()
+        if keys[pygame.K_p]
+            pause=True
+        if keys[pygame.K_s]
+            pause=False
+        if(pause==False)
+            clock.tick(60)
+            score += 1
+            platSpeed *= 1.0005
+            ball.move_both_axis(0, gravity)
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == K_q:
+                        exit()
+            #platform list
+            if(timer%(60) == 0):
+            
+                temprandx = random.randrange(0, 960)
+                temprandy = random.randrange(0, 400)
+
+                platform = Platform([temprandx, 720])
+                GamePlatList.append(platform)
+            if (timer < (60*40)):
+                timer += 1.5
+            elif(timer >= (60*40) and timer < (60*100)):
+                timer += 2
+            else:
+                timer += 3
+
+            #get all the keys being pressed
+            keys = pygame.key.get_pressed()
 
 
         
-        #depending on what key the user presses, update ball x and y position accordingly
-        #if keys[pygame.K_UP]:
-            #ball.move_both_axis(0, -ball.speed)
-        #if keys[pygame.K_DOWN]:
-            #ball.move_both_axis(0, ball.speed)
-        if keys[pygame.K_LEFT]:
-            ball.move_both_axis(-ball.speed, 0)
-        if keys[pygame.K_RIGHT]:
-            ball.move_both_axis(ball.speed,0)
+            #depending on what key the user presses, update ball x and y position accordingly
+            #if keys[pygame.K_UP]:
+                #ball.move_both_axis(0, -ball.speed)
+            #if keys[pygame.K_DOWN]:
+                #ball.move_both_axis(0, ball.speed)
+            if keys[pygame.K_p]
+                pause=True
+            if keys[pygame.K_s]
+                pause=False
+            if keys[pygame.K_LEFT]:
+                ball.move_both_axis(-ball.speed, 0)
+            if keys[pygame.K_RIGHT]:
+                ball.move_both_axis(ball.speed,0)
 
 
-        #creates boundaries
-        if ball.position[0] > 1280:
-            message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
-            time.sleep(3)
-            pygame.display.quit()
-            pygame.quit()
-            exit()
-        if ball.position[0] < 0:
-            message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
-            time.sleep(3)
-            pygame.display.quit()
-            pygame.quit()
-            exit()
-        if ball.position[1] < 75: #hit the top
-            message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
-            time.sleep(3)
-            pygame.display.quit()
-            pygame.quit()
-            exit()
-        if ball.position[1] > 720: #hit the top
-            message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
-            time.sleep(3)
-            pygame.display.quit()
-            pygame.quit()
-            exit()
+            #creates boundaries
+            if ball.position[0] > 1280:
+                message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
+                time.sleep(3)
+                pygame.display.quit()
+                pygame.quit()
+                exit()
+            if ball.position[0] < 0:
+                message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
+                time.sleep(3)
+                pygame.display.quit()
+                pygame.quit()
+                exit()
+            if ball.position[1] < 75: #hit the top
+                message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
+                time.sleep(3)
+                pygame.display.quit()
+                pygame.quit()
+                exit()
+            if ball.position[1] > 720: #hit the top
+                message_to_screen("GAME OVER! Score: {:.0f}".format(score), red)
+                time.sleep(3)
+                pygame.display.quit()
+                pygame.quit()
+                exit()
 
-        for i in GamePlatList:
-            i.moveaxis(0, platSpeed)
+            for i in GamePlatList:
+                i.moveaxis(0, platSpeed)
 
-        screen.fill(BLACK) #fill the screen with black
-        #pygame.draw.rect(screen, white, ball.rect)
-        screen.blit(ball.img, ball.position) #draw the ball
-        p = -5
-        while p < screen_width:  
-            screen.blit(ceiling, [p,0])
-            p = p + 45
+            screen.fill(BLACK) #fill the screen with black
+            #pygame.draw.rect(screen, white, ball.rect)
+            screen.blit(ball.img, ball.position) #draw the ball
+            p = -5
+            while p < screen_width:  
+                screen.blit(ceiling, [p,0])
+                p = p + 45
         
 
-        for i in GamePlatList:
-            screen.blit(i.img, i.rect)
+            for i in GamePlatList:
+                screen.blit(i.img, i.rect)
 
-        scoretext = font.render("Score: " + str(score), 1, red)
-        screen.blit(scoretext, (5,screen_height-120))
+            scoretext = font.render("Score: " + str(score), 1, red)
+            screen.blit(scoretext, (5,screen_height-120))
 
         
-        pygame.display.update() #update the screen
+            pygame.display.update() #update the screen
 #HIGH SCORE IS 2904
 game_loop()
